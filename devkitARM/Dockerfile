@@ -8,13 +8,13 @@ ENV DEVKITARM $DEVKITPRO/devkitARM
 
 ADD devkitARMupdate.pl devkitARMupdate.pl
 RUN apt-get update && \
-  apt-get install -y perl wget bzip2 make && \
+  apt-get install -y \
+    bzip2 \
+    make \
+    perl \
+    wget && \
   rm -rf /var/lib/apt/lists/*
-# This call to sed inserts a line to force downloading r42. For some reason, the
-# Windows installer is labeled r43, but there is no r43 for Linux or Mac. The
-# latest official release on devkitPro.org is r42.
-RUN sed -i '201i $newFiles{devkitARM} =~ s/r43/r42/;' devkitARMupdate.pl && \
-  perl devkitARMupdate.pl && \
+RUN perl devkitARMupdate.pl && \
   rm /*.tar.bz2
 
 VOLUME ["/source"]
