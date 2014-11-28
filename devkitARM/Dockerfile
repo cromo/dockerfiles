@@ -15,8 +15,8 @@ RUN apt-get update && \
     wget && \
   rm -rf /var/lib/apt/lists/*
 RUN perl devkitARMupdate.pl && \
-  rm /*.tar.bz2
+  rm /devkitARMupdate.pl /*.tar.bz2
 
-VOLUME ["/source"]
+RUN mkdir /source
 WORKDIR /source
 CMD ["bash"]
