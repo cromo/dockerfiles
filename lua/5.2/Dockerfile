@@ -8,7 +8,7 @@ RUN apk --update add build-base && \
   gunzip lua-$LUA_VERSION.tar.gz && \
   tar xf lua-$LUA_VERSION.tar && \
   cd lua-$LUA_VERSION && \
-  make generic && \
+  make posix && \
   make install && \
   cd .. && \
   rm -rf lua-$LUA_VERSION lua-$LUA_VERSION.tar && \
