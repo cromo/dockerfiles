@@ -15,7 +15,7 @@ Haxe is an open source toolkit based on a modern, high level, strictly typed pro
 
 > [wikipedia.org/wiki/Haxe](https://en.wikipedia.org/wiki/Haxe)
 
-<img src="https://raw.githubusercontent.com/cromo/dockerfiles/master/haxe/logo.svg" alt="Haxe logo" width="200">
+![logo](https://raw.githubusercontent.com/cromo/dockerfiles/master/haxe/logo.png)
 
 # How to use this image
 
