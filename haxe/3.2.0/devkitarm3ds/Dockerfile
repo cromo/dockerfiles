@@ -9,6 +9,8 @@ ENV DEVKITARM $DEVKITPRO/devkitARM
 
 RUN apt-get update && \
   apt-get install -y \
+    automake \
+    autotools-dev \
     bzip2 \
     git \
     make \
@@ -17,6 +19,15 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 RUN perl devkitARMupdate.pl && \
   rm ./devkitARMupdate.pl ./*.tar.bz2
+
+RUN git clone https://github.com/devkitPro/3dstools.git /opt/3dstools && \
+  cd /opt/3dstools && \
+  ./autogen.sh && \
+  ./configure --prefix=$DEVKITARM && \
+  make && \
+  make install && \
+  cd / && \
+  rm -rf /opt/3dstools
 
 # Pull down the hxcpp fork that contains support for devkitARM and build the
 # necessary neko bytecode files. hxcpp.n always needs to be built for
