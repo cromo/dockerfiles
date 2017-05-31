@@ -1,4 +1,4 @@
-FROM debian:wheezy
+FROM debian:jessie
 MAINTAINER Cristian Romo "cristian.g.romo@gmail.com"
 
 # These dictate where to install devkitPro/ARM and dictate where they are found

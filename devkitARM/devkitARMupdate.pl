@@ -1,26 +1,26 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
 #
-#	Copyright (C) 2011
-#		Michael Theall (mtheall)
-#		Dave Murphy (WinterMute)
+# Copyright (C) 2011
+#   Michael Theall (mtheall)
+#   Dave Murphy (WinterMute)
 #
-#	This software is provided 'as-is', without any express or implied
-#	warranty.  In no event will the authors be held liable for any
-#	damages arising from the use of this software.
+# This software is provided 'as-is', without any express or implied
+# warranty.  In no event will the authors be held liable for any
+# damages arising from the use of this software.
 #
-#	Permission is granted to anyone to use this software for any
-#	purpose, including commercial applications, and to alter it and
-#	redistribute it freely, subject to the following restrictions:
+# Permission is granted to anyone to use this software for any
+# purpose, including commercial applications, and to alter it and
+# redistribute it freely, subject to the following restrictions:
 #
-#	1.	The origin of this software must not be misrepresented; you
-#		must not claim that you wrote the original software. If you use
-#		this software in a product, an acknowledgment in the product
-#		documentation would be appreciated but is not required.
-#	2.	Altered source versions must be plainly marked as such, and
-#		must not be misrepresented as being the original software.
-#	3.	This notice may not be removed or altered from any source
-#		distribution.
+# 1.  The origin of this software must not be misrepresented; you
+#   must not claim that you wrote the original software. If you use
+#   this software in a product, an acknowledgment in the product
+#   documentation would be appreciated but is not required.
+# 2.  Altered source versions must be plainly marked as such, and
+#   must not be misrepresented as being the original software.
+# 3.  This notice may not be removed or altered from any source
+#   distribution.
 #
 #-----------------------------------------------------------------------------
   use strict;
@@ -59,17 +59,17 @@
   # Check OS information
   if($os eq "Linux" and ($arch eq "i686" or $arch eq "x86_64"))
   {
-	$downloader = "wget -q";
-	$archname = $arch . "-linux";
+    $downloader = "wget -q";
+    $archname = $arch . "-linux";
   }
-  elsif($os eq "Darwin")
+  elsif($os eq "Darwin" and ($arch eq "i386" or $arch eq "x86_64"))
   {
-	$downloader = "curl -L -O -s";
-	$archname = "osx";
+    $downloader = "curl -L -O -s";
+    $archname = $arch . "-osx";
   }
   else
   {
-    printf(STDERR "Not on Linux i686/x86_64 or Darwin!\n");
+    printf(STDERR "Not on Linux i686/x86_64 or Darwin i386/x86_64!\n");
     exit(1);
   }
 
@@ -79,6 +79,10 @@
     mkdir("$dir") or die $!;
   }
 
+  if(!(-d "$dir/libctru"))
+  {
+    mkdir("$dir/libctru") or die $!;
+  }
   if(!(-d "$dir/libnds"))
   {
     mkdir("$dir/libnds") or die $!;
@@ -107,11 +111,15 @@
   {
     mkdir("$dir/examples/gp32") or die $!;
   }
+  if(!(-d "$dir/examples/3ds"))
+  {
+    mkdir("$dir/examples/3ds") or die $!;
+  }
 
   # Grab update file
   if(-e "devkitProUpdate.ini")
   {
-	unlink("devkitProUpdate.ini") or die $!;
+  unlink("devkitProUpdate.ini") or die $!;
   }
   printf("Downloading update file...");
   system($downloader . " http://devkitpro.sourceforge.net/devkitProUpdate.ini") and die "Failed to download!";
@@ -134,6 +142,9 @@
       'ndsexamples'  => 0,
       'defaultarm7'  => 0,
       'filesystem'   => 0,
+      'libctru'      => 0,
+      'citro3d'      => 0,
+      '3dsexamples'  => 0,
     );
   my %newVersions = %versions;
 
@@ -198,7 +209,7 @@
       printf("%s is up-to-date\n", $key);
     }
   }
-  
+
   # Download files
   foreach my $key (keys %updates)
   {
@@ -231,6 +242,9 @@
       'ndsexamples'  => 'examples/nds',
       'defaultarm7'  => 'libnds',
       'filesystem'   => 'libnds',
+      'libctru'      => 'libctru',
+      'citro3d'      => 'libctru',
+      '3dsexamples'  => 'examples/3ds',
     );
 
   foreach my $key (keys %updates)
