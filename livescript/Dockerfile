@@ -1,4 +1,4 @@
-FROM node
+FROM node:alpine
 MAINTAINER Cristian Romo "cristian.g.romo@gmail.com"
 
 RUN npm install -g LiveScript
